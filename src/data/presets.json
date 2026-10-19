@@ -1,0 +1,12 @@
+[
+  { "symbol": "EURUSD", "decimals": 5, "pip": 0.0001 },
+  { "symbol": "GBPUSD", "decimals": 5, "pip": 0.0001 },
+  { "symbol": "USDJPY", "decimals": 3, "pip": 0.01 },
+  { "symbol": "AUDUSD", "decimals": 5, "pip": 0.0001 },
+  { "symbol": "USDCAD", "decimals": 5, "pip": 0.0001 },
+  { "symbol": "USDCHF", "decimals": 5, "pip": 0.0001 },
+  { "symbol": "NZDUSD", "decimals": 5, "pip": 0.0001 },
+  { "symbol": "XAUUSD", "decimals": 2, "pip": 0.1 },
+  { "symbol": "XAGUSD", "decimals": 3, "pip": 0.01 },
+  { "symbol": "BTCUSD", "decimals": 1, "pip": 1 }
+]

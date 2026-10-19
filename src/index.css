@@ -1,0 +1,168 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Palet identitas: hijau hutan #254033, hijau tua #17410E, oranye #FF7A3C.
+ * Peran (satu warna satu peran):
+ *   - hijau tua #17410E  → sisi Support (lantai); IML = turunan lebih ringan
+ *   - oranye #FF7A3C     → sisi Resistance (dinding); di kertas terang dipakai
+ *                          turunan gelapnya #A63F0D/#B84610 agar lolos WCAG AA
+ *   - hijau hutan #254033 → chrome (header band, tombol utama, toast terang)
+ *   - biru price         → harga sekarang + ring fokus (hue jauh dari hijau/oranye)
+ *   - merah alert        → hanya teks galat; kuning caution → hanya peringatan non-galat
+ * Semua pasangan teks & garis diverifikasi WCAG (teks ≥4,5:1, grafis ≥3:1),
+ * lihat contrast-check.cjs.
+ */
+:root {
+  --paper: hsl(42, 36%, 95%);
+  --surface: #fbf9f4;
+  --rule: #dad4c7;
+  --ink: #1b1f23;
+  --ink-muted: #5c6168;
+  --brand: #254033;
+  --accent: #ff7a3c;
+  --resist: #a63f0d;
+  --resist-soft: #b84610;
+  --support: #17410e;
+  --support-soft: #44653a;
+  --price: #2f3db8;
+  --alert: #b0123f;
+  --caution: #8a5a00;
+  --caution-bg: #fff1cc;
+  --toast-bg: #254033;
+  --toast-ink: #f6f3ec;
+  --band-ink: #f6f3ec;
+  --btn-bg: #254033;
+  --btn-ink: #f6f3ec;
+  color-scheme: light;
+}
+
+.dark {
+  --paper: #0e1411;
+  --surface: #151a16;
+  --rule: #2a312d;
+  --ink: #e8e4da;
+  --ink-muted: #99a29b;
+  --brand: #254033;
+  --accent: #ff7a3c;
+  --resist: #ff7a3c;
+  --resist-soft: #cf6633;
+  --support: #4fb35c;
+  --support-soft: #459b51;
+  --price: #8c9bff;
+  --alert: #ff7a9c;
+  --caution: #f2c96b;
+  --caution-bg: #3a2e10;
+  --toast-bg: #e8e4da;
+  --toast-ink: #12161b;
+  --band-ink: #f6f3ec;
+  --btn-bg: #e8e4da;
+  --btn-ink: #12161b;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-rule: var(--rule);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-brand: var(--brand);
+  --color-accent: var(--accent);
+  --color-resist: var(--resist);
+  --color-resist-soft: var(--resist-soft);
+  --color-support: var(--support);
+  --color-support-soft: var(--support-soft);
+  --color-price: var(--price);
+  --color-alert: var(--alert);
+  --color-caution: var(--caution);
+  --color-caution-bg: var(--caution-bg);
+  --color-toast-bg: var(--toast-bg);
+  --color-toast-ink: var(--toast-ink);
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', monospace;
+  --radius-sm: 4px;
+  --radius-md: 4px;
+  --radius-lg: 4px;
+  --radius-xl: 4px;
+  --breakpoint-md: 640px;
+  --breakpoint-lg: 1100px;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 22px;
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  * {
+    border-radius: 4px;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--price);
+    outline-offset: 2px;
+  }
+
+  /* Ring fokus di dalam band hijau hutan: biru tidak kontras di sana,
+     oranye #FF7A3C memberi 4,4:1 terhadap band. */
+  header :focus-visible {
+    outline-color: var(--accent);
+  }
+
+  input,
+  select,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+}
+
+@utility num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+@utility label-caps {
+  font-size: 12px;
+  line-height: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+}
+
+/* Baris level yang nilainya berkedip (tint 400 ms) */
+@keyframes rowflash {
+  from {
+    background-color: color-mix(in srgb, var(--price) 10%, transparent);
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
+.row-flash {
+  animation: rowflash 400ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
